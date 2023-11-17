@@ -6,6 +6,12 @@ on:
 
 jobs:
   run:
+    strategy:
+      fail-fast: true
+      matrix:
+        hostname:
+          - "https://aaronbatilo.dev"
+          - "https://mentallyanimated.com"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,6 +19,8 @@ jobs:
 
       - name: Execute test
         uses: grafana/k6-action@v0.3.0
+        env:
+          HOSTNAME: ${{ matrix.hostname }}
         with:
           filename: main.js
 

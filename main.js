@@ -7,9 +7,7 @@ export const options = {
 };
 
 export default function() {
-  http.get('https://aaronbatilo.dev', {
-    tags: { name: 'Home' },
-  });
+  http.get(`${__ENV.HOSTNAME}`);
 }
 
 export function handleSummary(data) {
