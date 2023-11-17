@@ -16,7 +16,7 @@ jobs:
           https://aaronbatilo.dev
           https://mentallyanimated.com
           "
-          targets="$(echo ${targets} | jq -Rs '{targets: split(\"\n\") | map(select(. != \"\"))'})"
+          targets="$(echo ${targets} | jq -Rs '{targets: split("\n") | map(select(. != ""))'})"
           echo "targets=${targets}" >> "$GITHUB_OUTPUT"
   run:
     needs: [list-targets]
