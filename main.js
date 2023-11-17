@@ -11,7 +11,8 @@ export default function() {
 }
 
 export function handleSummary(data) {
+  const name = `${__ENV.HOSTNAME.replace(/\W/g, '_')}.html`;
   return {
-    "summary.html": htmlReport(data),
+    [name]: htmlReport(data),
   };
 }

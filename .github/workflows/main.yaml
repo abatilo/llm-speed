@@ -25,4 +25,5 @@ jobs:
           filename: main.js
 
       - run: |
-          cat summary.html
+          name="$(echo '${{ matrix.hostname }}' | sed 's/[^a-zA-Z0-9]/_/g')"
+          cat ${name}.html
