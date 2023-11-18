@@ -13,8 +13,8 @@ jobs:
       - id: targets
         run: |
           targets="
-          https://aaronbatilo.dev
-          https://mentallyanimated.com
+          gpt3turbo
+          gpt4turbo
           "
           # Convert the multiline string into a JSON array
           json_array=$(echo "$targets" | jq -R -s -c 'split("\n") | map(select(length > 0))')
@@ -35,7 +35,8 @@ jobs:
       - name: Execute test
         uses: grafana/k6-action@v0.3.0
         env:
-          HOSTNAME: ${{ matrix.target }}
+          TARGET: ${{ matrix.target }}
+          OPENAI_SECRET_KEY: ${{ secrets.OPENAI_SECRET_KEY }}
         with:
           filename: main.js
 
