@@ -49,3 +49,13 @@ jobs:
         with:
           name: ${{ steps.sanitize-name.outputs.name }}
           path: ${{ steps.sanitize-name.outputs.name }}.html
+
+  publish:
+    needs: [list-targets, run]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+
+      - name: Display structure of downloaded files
+        run: |
+          ls -R
