@@ -56,6 +56,56 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
 
+      - name: Collect benchmarks
+        shell: python
+        run: |
+          import os
+          import shutil
+
+          def find_html_files(root_dir, destination_dir):
+              html_files = []
+              for root, dirs, files in os.walk(root_dir):
+                  for file in files:
+                      if file.endswith('.html'):
+                          html_files.append(os.path.join(root, file))
+              return html_files
+
+          def move_files(files, destination_dir):
+              for file in files:
+                  shutil.move(file, destination_dir)
+
+          def delete_folders(root_dir):
+              for root, dirs, _ in os.walk(root_dir, topdown=False):
+                  for dir in dirs:
+                      dir_path = os.path.join(root, dir)
+                      if not os.listdir(dir_path):  # check if directory is empty
+                          os.rmdir(dir_path)
+
+          def create_index_html(files, destination_dir):
+              with open(os.path.join(destination_dir, 'index.html'), 'w') as index_file:
+                  index_file.write('<html><body>\n')
+                  index_file.write('<h1>List of HTML Files</h1>\n')
+                  index_file.write('<ul>\n')
+
+                  for file in files:
+                      file_name = os.path.basename(file)
+                      index_file.write(f'<li><a href="{file_name}">{file_name}</a></li>\n')
+
+                  index_file.write('</ul>\n')
+                  index_file.write('</body></html>')
+
+          def main():
+              root_dir = '.'  # start search from the current directory
+              destination_dir = os.getcwd()  # current directory
+
+              html_files = find_html_files(root_dir, destination_dir)
+              move_files(html_files, destination_dir)
+              delete_folders(root_dir)
+              create_index_html(html_files, destination_dir)
+
+          if __name__ == '__main__':
+              main()
+
       - name: Display structure of downloaded files
         run: |
           ls -R
