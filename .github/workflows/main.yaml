@@ -19,7 +19,7 @@ jobs:
           # Convert the multiline string into a JSON array
           json_array=$(echo "$targets" | jq -R -s -c 'split("\n") | map(select(length > 0))')
           # Create a JSON object with the key "targets"
-          json_object=$(jq -c -n --argjson arr "$json_array" '{"targets": $arr}')
+          json_object=$(jq -c -n --argjson arr "$json_array" '{"target": $arr}')
 
           echo "targets=${json_object}" >> "$GITHUB_OUTPUT"
   run:
@@ -35,13 +35,13 @@ jobs:
       - name: Execute test
         uses: grafana/k6-action@v0.3.0
         env:
-          HOSTNAME: ${{ matrix.hostname }}
+          HOSTNAME: ${{ matrix.target }}
         with:
           filename: main.js
 
       - id: sanitize-name
         run: |
-          name="$(echo '${{ matrix.hostname }}' | sed 's/[^a-zA-Z0-9]/_/g')"
+          name="$(echo '${{ matrix.target }}' | sed 's/[^a-zA-Z0-9]/_/g')"
           echo "${name}"
           echo "name=${name}" >> "$GITHUB_OUTPUT"
 
