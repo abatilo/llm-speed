@@ -53,6 +53,13 @@ jobs:
   publish:
     needs: [list-targets, run]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
     steps:
       - uses: actions/download-artifact@v3
 
@@ -109,3 +116,7 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           ls -R
+
+      - name: Deploy artifact
+        id: deployment
+        uses: actions/deploy-pages@v2
