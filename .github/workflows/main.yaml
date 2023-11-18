@@ -117,6 +117,12 @@ jobs:
         run: |
           ls -R
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
       - name: Deploy artifact
         id: deployment
         uses: actions/deploy-pages@v2
