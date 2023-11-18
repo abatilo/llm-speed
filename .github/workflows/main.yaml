@@ -140,6 +140,7 @@ jobs:
 
                   index_file.write('</ul>\n')
 
+                  current_datetime = datetime.datetime.utcnow()
                   formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
                   index_file.write(f'''
                       <p>
