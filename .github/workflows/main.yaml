@@ -42,8 +42,8 @@ jobs:
       - id: sanitize-name
         run: |
           name="$(echo '${{ matrix.hostname }}' | sed 's/[^a-zA-Z0-9]/_/g')"
-          cat ${name}.html
-          echo "name=${name}" >> $GITHUB_OUTPUT
+          echo "${name}"
+          echo "name=${name}" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v3
         with:
