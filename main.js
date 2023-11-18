@@ -5,7 +5,7 @@ import gpt4turbo from './apis/gpt4turbo.js';
 
 export const options = {
   vus: 10,
-  duration: '10s',
+  duration: '30s',
 };
 
 const tokensPerSecond = Trend('tokens_per_second');
