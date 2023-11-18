@@ -8,7 +8,6 @@ export const options = {
   duration: '10s',
 };
 
-const timePerToken = Trend('time_per_token (ms)');
 const tokensPerSecond = Trend('tokens_per_second');
 const completionTokensMetric = Trend('completion_tokens');
 
@@ -17,7 +16,6 @@ export default function() {
   if (target === 'gpt3turbo') {
     const secretKey = `${__ENV.OPENAI_SECRET_KEY}`;
     gpt3turbo(
-      timePerToken,
       tokensPerSecond,
       completionTokensMetric,
       secretKey,
@@ -25,7 +23,6 @@ export default function() {
   } else if (target === 'gpt4turbo') {
     const secretKey = `${__ENV.OPENAI_SECRET_KEY}`;
     gpt4turbo(
-      timePerToken,
       tokensPerSecond,
       completionTokensMetric,
       secretKey,

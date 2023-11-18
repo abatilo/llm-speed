@@ -1,7 +1,6 @@
 import http from "k6/http";
 
 export default function(
-  timePerToken,
   tokensPerSecond,
   completionTokensMetric,
   secretKey) {
@@ -24,7 +23,6 @@ export default function(
 
   const timeInMilliseconds = resp.timings.duration;
 
-  timePerToken.add(resp.timings.duration / completion_tokens);
   tokensPerSecond.add(completion_tokens / (timeInMilliseconds / 1000));
   completionTokensMetric.add(completion_tokens);
 

@@ -91,15 +91,47 @@ jobs:
 
           def create_index_html(files, destination_dir):
               with open(os.path.join(destination_dir, 'index.html'), 'w') as index_file:
-                  index_file.write('<html><body>\n')
-                  index_file.write('<h1>List of HTML Files</h1>\n')
+                  # Start of HTML and head section with styles
+                  index_file.write('<!DOCTYPE html>\n<html>\n<head>\n')
+                  index_file.write('<style>\n')
+                  index_file.write('body {\n')
+                  index_file.write("    font-family: 'Arial', sans-serif;\n")
+                  index_file.write("    background-color: #E0F7FA;\n")
+                  index_file.write("    color: #0277BD;\n")
+                  index_file.write("    padding: 20px;\n}\n")
+                  index_file.write('.container {\n')
+                  index_file.write("    max-width: 800px;\n")
+                  index_file.write("    margin: auto;\n}\n")
+                  index_file.write('h1 {\n')
+                  index_file.write("    text-align: center;\n}\n")
+                  index_file.write('ul {\n')
+                  index_file.write("    list-style-type: none;\n")
+                  index_file.write("    padding: 0;\n}\n")
+                  index_file.write('li {\n')
+                  index_file.write("    margin: 10px 0;\n")
+                  index_file.write("    padding: 10px;\n")
+                  index_file.write("    background-color: #B3E5FC;\n")
+                  index_file.write("    border-radius: 8px;\n")
+                  index_file.write("    transition: background-color 0.3s;\n}\n")
+                  index_file.write('li:hover {\n')
+                  index_file.write("    background-color: #81D4FA;\n}\n")
+                  index_file.write('a {\n')
+                  index_file.write("    text-decoration: none;\n")
+                  index_file.write("    color: #01579B;\n}\n")
+                  index_file.write('a:hover {\n')
+                  index_file.write("    color: #0288D1;\n}\n")
+                  index_file.write('</style>\n</head>\n')
+
+                  # Body section
+                  index_file.write('<body>\n<div class="container">\n')
+                  index_file.write('<h1>List of Benchmarks</h1>\n')
                   index_file.write('<ul>\n')
 
                   for file in files:
                       file_name = os.path.basename(file)
-                      index_file.write(f'<li><a href="{file_name}">{file_name}</a></li>\n')
+                      index_file.write(f'<li><a href="{file_name}">{file_name.removesuffix(".html")}</a></li>\n')
 
-                  index_file.write('</ul>\n')
+                  index_file.write('</ul>\n</div>\n')
                   index_file.write('</body></html>')
 
           def main():
@@ -113,10 +145,6 @@ jobs:
 
           if __name__ == '__main__':
               main()
-
-      - name: Display structure of downloaded files
-        run: |
-          ls -R
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
