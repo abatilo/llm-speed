@@ -39,6 +39,13 @@ jobs:
         with:
           filename: main.js
 
-      - run: |
+      - id: sanitize-name
+        run: |
           name="$(echo '${{ matrix.hostname }}' | sed 's/[^a-zA-Z0-9]/_/g')"
           cat ${name}.html
+          echo "name=${name}" >> $GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.sanitize-name.outputs.name }}
+          path: ${{ steps.sanitize-name.outputs.name }}.html
